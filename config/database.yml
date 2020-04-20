@@ -19,8 +19,8 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: driver_production
-  host: localhost
+  database: d4mdjj4nlurf5e
+  host: ec2-54-210-128-153.compute-1.amazonaws.com
   pool: 5
-  username: esteban
-  password: your_password
+  username: nxmawpwuhfrhui
+  password: 23500608f6867845d8eb928f0f656ba84cd4873916820b1afcbf3f533cfbdafa
