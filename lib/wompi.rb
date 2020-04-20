@@ -37,9 +37,9 @@ class Wompi
       headers: headers
     )
     
-    response = nil
+    response = false
     if result.success? && ['APPROVED','PENDING'].include?(result.parsed_response['data']['status'])
-      response = result.parsed_response['data']
+      response = true
     end
     response
   end

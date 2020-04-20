@@ -11,4 +11,9 @@ class Ride < ActiveRecord::Base
 		rand_id = rand(Driver.count)
 		self.driver = Driver.availables.where("id >= ?", rand_id).first
 	end
+
+	def finished_ride
+		self.finished!
+		self.paid!
+	end
 end

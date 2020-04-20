@@ -5,17 +5,20 @@ class Driver < User
 	scope :availables, -> { where(driver_available: true) }
 
 	def finish_ride params
-		#return {} if self.rider_profile.blank?
-		ride = Ride.find_by(params[:ride_id])
+		result = false
+		ride = Ride.find_by(id: params[:ride_id])
 		from = [ride.latitude, ride.longitude]
 		to   = [params[:latitude], params[:longitude]]
-		amount = calculate_price(from, to)
-		Wompi.generate_transaction(ride, amount)
+
+		amount = Driver.calculate_price(from, to)
+		if ride.in_progress? && Wompi.generate_transaction(ride, amount)
+			ride.finished_ride
+			result = true
+		end
+		result
 	end
 
-	private
-
-	def calculate_price(from, to)
+	def self.calculate_price(from, to)
 		km = Geocoder::Calculations.distance_between(from, to, units: :km)
 		traffic = 60 # 60 Km/h
 		minutes = (km / traffic) * 60
