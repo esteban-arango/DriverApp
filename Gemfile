@@ -17,6 +17,7 @@ gem 'rack-contrib', require: false
 gem 'httparty'
 gem 'geocoder'
 gem 'dry-validation'
+gem 'faker'
 group :test do
   gem 'rspec'
   gem 'capybara'
