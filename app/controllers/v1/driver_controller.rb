@@ -12,10 +12,14 @@ class DriverController < Sinatra::Base
 
   post '/v1/finish_ride' do
     result = GetRideContract.new.call(params)
-    if result.success?
+    if result.success? && env[:user].class.name == 'Driver'
       { message: env[:user].finish_ride(result.to_h) }.to_json
     else
-      halt 422, { message: result.errors.to_h }.to_json
+      response = result.errors.to_h
+      if env[:user].class.name != 'Driver'
+        response.merge({ token: 'Token is not for Drivers, check your token' })
+      end
+      halt 422, { message: response }.to_json
     end
   end
 end
