@@ -8,7 +8,7 @@ class Ride < ActiveRecord::Base
   enum payment_status: { pending: 0, paid: 1 }.freeze
 
   def set_driver
-    rand_id = rand(Driver.count)
+    rand_id = (ENV['SINATRA_ENV'] == 'development' ? rand(Driver.count) : 1) # Random in production, first in dev
     driver  = Driver.availables.where('id >= ?', rand_id).first
     driver.update_column(:driver_available, false) if driver.present?
     self.driver = driver
