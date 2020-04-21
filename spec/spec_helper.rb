@@ -1,11 +1,11 @@
-ENV["SINATRA_ENV"] = "test"
+ENV['SINATRA_ENV'] = 'test'
 
 require_relative '../config/environment'
 require 'rack/test'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'webmock/rspec'
-Dir['./spec/mocks/*.rb'].each{ |rb| require rb }
+Dir['./spec/mocks/*.rb'].each { |rb| require rb }
 
 if ActiveRecord::Migrator.needs_migration?
   raise 'Migrations are pending. Run `rake db:migrate SINATRA_ENV=test` to resolve the issue.'
@@ -13,7 +13,7 @@ end
 
 ActiveRecord::Base.logger = nil
 
-FactoryBot.definition_file_paths = %w{./factories ./test/factories ./spec/factories}
+FactoryBot.definition_file_paths = %w[./factories ./test/factories ./spec/factories]
 FactoryBot.find_definitions
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
@@ -21,14 +21,14 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.include Rack::Test::Methods
   config.include Capybara::DSL
-  #DatabaseCleaner.strategy = :truncation
+  # DatabaseCleaner.strategy = :truncation
 
   config.before do
-    #DatabaseCleaner.clean
+    # DatabaseCleaner.clean
   end
 
   config.after do
-    #DatabaseCleaner.clean
+    # DatabaseCleaner.clean
   end
 
   config.order = 'default'

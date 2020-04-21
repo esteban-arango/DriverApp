@@ -10,7 +10,7 @@ class RiderController < Sinatra::Base
     content_type :json
   end
 
-  post "/v1/payment_source" do
+  post '/v1/payment_source' do
     result = PaymentSourceContract.new.call(params)
     if result.success?
       { message: env[:user].create_payment_source(result.to_h) }.to_json
@@ -19,8 +19,8 @@ class RiderController < Sinatra::Base
     end
   end
 
-  post "/v1/request_ride" do
-    result = RideContract.new.call(params)
+  post '/v1/request_ride' do
+    result = CreateRideContract.new.call(params)
     if result.success?
       { message: env[:user].create_ride(result.to_h) }.to_json
     else

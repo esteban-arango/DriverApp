@@ -16,7 +16,7 @@ describe Rider, type: :model do
 
   describe '#create_ride' do
     let(:rider) { create :rider }
-    it "when is valid params" do
+    it 'when is valid params' do
       params = {
         latitude: Faker::Address.latitude,
         longitude: Faker::Address.longitude,
@@ -30,7 +30,7 @@ describe Rider, type: :model do
 
   describe '#create_payment_source' do
     let(:rider) { create :rider }
-    it "when is valid params" do
+    it 'when is valid params' do
       params = {
         number: '4242424242424242',
         cvc: '789',

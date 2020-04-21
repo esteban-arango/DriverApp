@@ -8,7 +8,7 @@ class AuthController < Sinatra::Base
     result = AuthContract.new.call(params)
     if result.success?
       user = User.find_by(email: params[:email])
-      if user && user.authenticate(params[:password])
+      if user&.authenticate(params[:password])
         content_type :json
         { token: token(params[:email]) }.to_json
       else
@@ -19,11 +19,11 @@ class AuthController < Sinatra::Base
     end
   end
 
-  def token email
+  def token(email)
     JWT.encode payload(email), ENV['JWT_SECRET'], 'HS256'
   end
 
-  def payload email
+  def payload(email)
     {
       exp: Time.now.to_i + 60 * 60,
       iat: Time.now.to_i,

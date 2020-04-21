@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,42 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200419153903) do
-
+ActiveRecord::Schema.define(version: 20_200_419_153_903) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "payment_sources", force: :cascade do |t|
-    t.string   "token"
-    t.string   "name"
-    t.string   "brand"
-    t.string   "last_four"
-    t.string   "card_holder"
-    t.boolean  "active",      default: true
-    t.integer  "rider_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+  create_table 'payment_sources', force: :cascade do |t|
+    t.string   'token'
+    t.string   'name'
+    t.string   'brand'
+    t.string   'last_four'
+    t.string   'card_holder'
+    t.boolean  'active', default: true
+    t.integer  'rider_id'
+    t.datetime 'created_at',                 null: false
+    t.datetime 'updated_at',                 null: false
   end
 
-  create_table "rides", force: :cascade do |t|
-    t.string   "latitude"
-    t.string   "longitude"
-    t.integer  "status",            default: 0
-    t.integer  "payment_status",    default: 0
-    t.integer  "payment_source_id"
-    t.integer  "rider_id"
-    t.integer  "driver_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+  create_table 'rides', force: :cascade do |t|
+    t.string   'latitude'
+    t.string   'longitude'
+    t.integer  'status',            default: 0
+    t.integer  'payment_status',    default: 0
+    t.integer  'payment_source_id'
+    t.integer  'rider_id'
+    t.integer  'driver_id'
+    t.datetime 'created_at',                    null: false
+    t.datetime 'updated_at',                    null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "email"
-    t.string   "password_digest"
-    t.string   "type"
-    t.boolean  "driver_available", default: true
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+  create_table 'users', force: :cascade do |t|
+    t.string   'email'
+    t.string   'password_digest'
+    t.string   'type'
+    t.boolean  'driver_available', default: true
+    t.datetime 'created_at',                      null: false
+    t.datetime 'updated_at',                      null: false
   end
-
 end

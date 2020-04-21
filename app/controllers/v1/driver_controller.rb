@@ -10,8 +10,8 @@ class DriverController < Sinatra::Base
     content_type :json
   end
 
-  post "/v1/finish_ride" do
-    result = RideContract.new.call(params)
+  post '/v1/finish_ride' do
+    result = GetRideContract.new.call(params)
     if result.success?
       { message: env[:user].finish_ride(result.to_h) }.to_json
     else
