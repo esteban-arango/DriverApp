@@ -11,9 +11,11 @@ class RiderController < Sinatra::Base
   end
 
   post '/v1/payment_source' do
-    result = PaymentSourceContract.new.call(params)
-    if result.success?
-      { message: env[:user].create_payment_source(result.to_h) }.to_json
+    result = PaymentSourceRequestContract.new.call(params)
+    if true || result.success?
+      create_response = env[:user].create_payment_source(result.to_h)
+      code = create_response[:success] ? 200 : 422
+      halt code, { message: create_response[:data] }.to_json
     else
       halt 422, { message: result.errors.to_h }.to_json
     end

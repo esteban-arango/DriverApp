@@ -25,12 +25,26 @@ describe Ride, type: :model do
     end
   end
 
+  describe '.update_pending_transaction' do
+    it 'when transactions are approved' do
+      ride = create(:ride)
+      Ride.update_pending_transaction
+      expect(ride.reload.paid?).to be true
+    end
+  end
+
   describe '#finished_ride' do
     let(:ride) { create :ride }
-    it 'when drivers are available' do
-      ride.finished_ride
+    it 'when payment is success' do
+      ride.finished_ride({ status: 'APPROVED', id: '123-abc' })
       expect(ride.finished?).to be true
       expect(ride.paid?).to be true
+      expect(ride.driver.driver_available).to be true
+    end
+    it 'when payment is pending' do
+      ride.finished_ride({ status: 'PENDING', id: '123-abc' })
+      expect(ride.finished?).to be true
+      expect(ride.pending?).to be true
       expect(ride.driver.driver_available).to be true
     end
   end

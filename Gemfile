@@ -18,6 +18,7 @@ gem 'sinatra'
 gem 'sinatra-activerecord', require: 'sinatra/activerecord'
 gem 'thin'
 gem 'tux'
+gem 'whenever', require: false
 group :test do
   gem 'capybara'
   gem 'factory_bot'

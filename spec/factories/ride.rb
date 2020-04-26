@@ -7,5 +7,6 @@ FactoryBot.define do
     payment_source_id { 1 }
     rider { create(:rider) }
     driver { create(:driver) }
+    transaction_id { SecureRandom.uuid }
   end
 end

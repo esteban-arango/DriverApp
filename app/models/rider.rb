@@ -7,13 +7,20 @@ class Rider < User
 
   def create_payment_source(params)
     response = Wompi.tokenize_credit_card(params)
-    response['token'] = response['id'] # rename id tokenized
-    payment_fields = response.slice('token', 'name', 'brand', 'last_four', 'card_holder')
+    if response[:success]
+      response[:data][:token] = response[:data].delete(:id) # rename token key
 
-    payment_sources.create(payment_fields)
+      result = PaymentSourceContract.new.call(response[:data])
+      response = if result.success?
+                   { sucess: true, data: payment_sources.create(result.to_h).serialize }
+                 else
+                   { sucess: false, data: result.errors.to_h }
+                 end
+    end
+    response
   end
 
   def create_ride(params)
-    rides.create(params)
+    rides.create(params).serialize
   end
 end

@@ -22,6 +22,12 @@ RSpec.configure do |config|
     stub_request(:post, ENV['WOMPI_HOST'] + 'transactions')
       .with(headers: headers)
       .to_return(status: 200, body: {
+        data: { id: '123-abc', status: 'APPROVED' }
+      }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+    stub_request(:get, %r{#{ENV['WOMPI_HOST']}transactions/\.*})
+      .with(headers: headers)
+      .to_return(status: 200, body: {
         data: { status: 'APPROVED' }
       }.to_json, headers: { 'Content-Type' => 'application/json' })
   end

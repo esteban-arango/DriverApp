@@ -10,9 +10,10 @@ class Wompi
                            body: body.to_json,
                            headers: headers)
     response = nil
-
     if result.success? && result.parsed_response['status'] == 'CREATED'
-      response = result.parsed_response['data']
+      response = { success: true, data: result.parsed_response['data'].symbolize_keys }
+    else
+      response = { success: false, data: result.parsed_response['error']['messages'] }
     end
     response
   end
@@ -35,11 +36,27 @@ class Wompi
     result = HTTParty.post(ENV['WOMPI_HOST'] + 'transactions',
                            body: build_body(ride.payment_source.token, ride.id, ride.rider.email, amount),
                            headers: headers)
-
-    response = false
-    if result.success? && %w[APPROVED PENDING].include?(result.parsed_response['data']['status'])
-      response = true
+    response = nil
+    if result.success?
+      response = { success: true, data: { id: result.parsed_response['data']['id'], status: result.parsed_response['data']['status'] } }
+    else
+      response = { success: false, data: result.parsed_response['error']['messages'] }
     end
+    response
+  end
+
+  def self.get_transaction(id)
+    headers = {
+      'Authorization' => "Bearer #{ENV['WOMPI_PRV_TOKEN']}",
+      'Content-Type' => 'application/json'
+    }
+    result = HTTParty.get(ENV['WOMPI_HOST'] + "transactions/#{id}", headers: headers)
+    response = nil
+    response = if result.success?
+                 { success: true, data: result.parsed_response['data']['status'] }
+               else
+                 { success: false, data: result.parsed_response['error']['messages'] }
+               end
     response
   end
 

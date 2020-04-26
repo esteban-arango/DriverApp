@@ -29,6 +29,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    chronic (0.10.2)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
     crack (0.4.3)
@@ -182,6 +183,8 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
@@ -215,6 +218,7 @@ DEPENDENCIES
   thin
   tux
   webmock
+  whenever
 
 BUNDLED WITH
    2.1.4

@@ -1,6 +1,6 @@
 require 'dry-validation'
 
-class PaymentSourceContract < Dry::Validation::Contract
+class PaymentSourceRequestContract < Dry::Validation::Contract
   schema do
     required(:number).value(:string)
     required(:cvc).value(:string)
@@ -23,5 +23,15 @@ class PaymentSourceContract < Dry::Validation::Contract
 
   rule(:exp_year) do
     key.failure('must be have 2 numbers') if value.size != 2
+  end
+end
+
+class PaymentSourceContract < Dry::Validation::Contract
+  schema do
+    required(:token).value(:string)
+    required(:name).value(:string)
+    required(:brand).value(:string)
+    required(:last_four).value(:string)
+    required(:card_holder).value(:string)
   end
 end

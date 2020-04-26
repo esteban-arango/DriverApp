@@ -27,18 +27,20 @@ describe Driver, type: :model do
   end
 
   describe '#finish_ride' do
-    let(:driver) { create :driver }
-    let(:ride) { create :ride, driver: driver }
-    let(:ride_finished) { create :ride, driver: driver, status: 1 }
+    let(:ride) { create :ride, transaction_id: nil }
+    let(:ride_finished) { create :ride, status: 1 }
 
     it 'when is successful' do
       params = { ride_id: ride.id, latitude: ride.latitude, longitude: ride.longitude }
-      expect(driver.finish_ride(params)).to be true
+      response = ride.driver.finish_ride(params)
+      expect(response[:success]).to be true
+      expect(response[:data][:status]).to eq('APPROVED')
     end
 
     it 'when ride is finished' do
       params = { ride_id: ride_finished.id, latitude: ride_finished.latitude, longitude: ride_finished.longitude }
-      expect(driver.finish_ride(params)).to be false
+      response = ride_finished.driver.finish_ride(params)
+      expect(response[:success]).to be false
     end
   end
 
